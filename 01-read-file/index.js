@@ -1,10 +1,11 @@
 const fs = require('fs')
-const path = require('node:path');
 
-fs.readFile('./01-read-file/text.txt', "utf-8", (e, data) => {
-    if (e) {
-        console.log("File is note open")
-    } else {
+let readingFile = (pathToFile) => {
+    let readStream = fs.ReadStream(pathToFile, { encoding: "utf-8" })
+    readStream.on("data", (data) => {
         console.log(data.trim())
-    }
-})
+    })
+}
+
+
+readingFile('./01-read-file/text.txt')
