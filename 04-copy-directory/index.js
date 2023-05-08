@@ -29,8 +29,6 @@ let copyFiles = async (pathMain, pathTo) => {
     for (let file of mainFiles) {
         await fsProm.copyFile(path.join(pathMain, file.name), path.join(pathTo, file.name))
     }
-
-    return
 }
 
 let deleteFiles = async (pathTo) => {
@@ -43,7 +41,6 @@ let deleteFiles = async (pathTo) => {
         await fsProm.unlink(path.join(pathTo, file.name));
     }
     await fsProm.rmdir(pathTo);
-    return;
 }
 
 
