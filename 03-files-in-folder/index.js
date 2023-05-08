@@ -12,7 +12,7 @@ let checkFileInfo = async (pathToFolder) => {
             let pathToFile = path.join(pathToFolder, item.name)
             fs.stat(pathToFile, (err, stats) => {
                 try {
-                    console.log(file.name + " - " + file.ext.slice(1, file.ext.length - 1) + " - " + stats.size + " bytes")
+                    console.log(file.name + " - " + file.ext.slice(1, file.ext.length) + " - " + stats.size + " bytes")
                 } catch (error) {
                     console.log("Иммеется ошибка: \n", error)
                 }
