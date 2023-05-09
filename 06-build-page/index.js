@@ -42,7 +42,7 @@ let buildHTML = async (pathToPage, pathToProjectDist) => {
   for (let htmlFile of htmlFiles) {
     let arr = htmlFile.split('.');
     let htmlFileInner = await fsProm.readFile(path.join(pathToPage, `/components/${htmlFile}`), { encoding: 'utf-8' });
-    text = text.replace(`{{${arr[0]}}}`, `${htmlFileInner}`);
+    text = text.replaceAll(`{{${arr[0]}}}`, `${htmlFileInner}`);
   }
 
   await fsProm.writeFile(path.join(pathToProjectDist, 'index.html'), text);
