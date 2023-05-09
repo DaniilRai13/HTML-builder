@@ -1,9 +1,9 @@
-let fsProm = require("fs/promises")
-let path = require("path")
-let pathMain = path.join(__dirname, "files")
-let pathTo = path.join(__dirname, "files-copy")
+const fsProm = require("fs/promises")
+const path = require("path")
+const pathMain = path.join(__dirname, "files")
+const pathTo = path.join(__dirname, "files-copy")
 
-let copyDir = async (pathMain, pathTo) => {
+const copyDir = async (pathMain, pathTo) => {
     try {
         await deleteFiles(pathTo)
         console.log("Preparing start")
@@ -20,9 +20,9 @@ let copyDir = async (pathMain, pathTo) => {
     }
 }
 
-let copyFiles = async (pathMain, pathTo) => {
+const copyFiles = async (pathMain, pathTo) => {
 
-    let mainFiles = await fsProm.readdir(pathMain, { withFileTypes: true });
+    const mainFiles = await fsProm.readdir(pathMain, { withFileTypes: true });
 
     await fsProm.mkdir(pathTo, { recursive: true })
 
@@ -37,8 +37,8 @@ let copyFiles = async (pathMain, pathTo) => {
     }
 }
 
-let deleteFiles = async (pathTo) => {
-    let files = await fsProm.readdir(pathTo, { withFileTypes: true });
+const deleteFiles = async (pathTo) => {
+    const files = await fsProm.readdir(pathTo, { withFileTypes: true });
     if (files.length === 0) {
         await fsProm.rmdir(pathTo);
         return;
