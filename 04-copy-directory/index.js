@@ -27,7 +27,13 @@ let copyFiles = async (pathMain, pathTo) => {
     await fsProm.mkdir(pathTo, { recursive: true })
 
     for (let file of mainFiles) {
-        await fsProm.copyFile(path.join(pathMain, file.name), path.join(pathTo, file.name))
+        if (file.isFile()) {
+            await fsProm.copyFile(path.join(pathMain, file.name), path.join(pathTo, file.name))
+        } else if (file.isDirectory()) {
+            await fsProm.mkdir(path.join(pathTo, file.name))
+            // console.log(yes)
+        }
+
     }
 }
 
@@ -38,7 +44,12 @@ let deleteFiles = async (pathTo) => {
         return;
     }
     for (let file of files) {
-        await fsProm.unlink(path.join(pathTo, file.name));
+        if (file.isFile()) {
+            await fsProm.unlink(path.join(pathTo, file.name));
+        }
+        else if(file.isDirectory()){
+            await fsProm.rm(path.join(pathTo, file.name),{recursive:true})
+        }
     }
     await fsProm.rmdir(pathTo);
 }
