@@ -18,10 +18,6 @@ let checkFileInfo = async (pathToFolder) => {
                 }
             })
         }
-        else{
-            console.log(`${item.name} - не файл`)
-        }
-
     })
 
 }
