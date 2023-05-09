@@ -1,17 +1,17 @@
-let fsProm = require('fs/promises');
-let path = require('path');
-let pathToPage = './06-build-page';
-let pethToStyles = path.join(pathToPage, 'styles');
-let pathToProjectDist = path.join(pathToPage, 'project-dist');
+const fsProm = require('fs/promises');
+const path = require('path');
+const pathToPage = './06-build-page';
+const pethToStyles = path.join(pathToPage, 'styles');
+const pathToProjectDist = path.join(pathToPage, 'project-dist');
 
-let bundleCss = async (pathToProjectDist, pathToStyles) => {
-  let styles = await fsProm.readdir(pathToStyles, { withFileTypes: true });
+const bundleCss = async (pathToProjectDist, pathToStyles) => {
+  const styles = await fsProm.readdir(pathToStyles, { withFileTypes: true });
   let cssInner = '';
 
   for (let style of styles) {
 
-    let pathToStyle = path.join(pathToStyles, style.name);
-    let file = path.parse(pathToStyle);
+    const pathToStyle = path.join(pathToStyles, style.name);
+    const file = path.parse(pathToStyle);
     if (file.ext === '.css' && style.isFile()) {
       cssInner += await fsProm.readFile(pathToStyle);
     }
@@ -19,9 +19,9 @@ let bundleCss = async (pathToProjectDist, pathToStyles) => {
   await fsProm.writeFile(path.join(pathToProjectDist, 'style.css'), cssInner);
 };
 
-let copyAssets = async (pathToFolder, pathToProjectDist, dirName) => {
+const copyAssets = async (pathToFolder, pathToProjectDist, dirName) => {
   await fsProm.mkdir(path.join(pathToProjectDist, 'assets'), { recursive: true });
-  let files = await fsProm.readdir(pathToFolder, { withFileTypes: true });
+  const files = await fsProm.readdir(pathToFolder, { withFileTypes: true });
   let dir = dirName;
   for (let item of files) {
     if (item.isDirectory()) {
@@ -36,19 +36,19 @@ let copyAssets = async (pathToFolder, pathToProjectDist, dirName) => {
 let buildHTML = async (pathToPage, pathToProjectDist) => {
 
   await fsProm.mkdir(pathToProjectDist, { recursive: true });
-  let text = await fsProm.readFile(path.join(pathToPage, 'template.html'), { encoding: 'utf-8' });
-  let htmlFiles = await fsProm.readdir(path.join(pathToPage, 'components'));
+  const text = await fsProm.readFile(path.join(pathToPage, 'template.html'), { encoding: 'utf-8' });
+  const htmlFiles = await fsProm.readdir(path.join(pathToPage, 'components'));
 
   for (let htmlFile of htmlFiles) {
-    let arr = htmlFile.split('.');
-    let htmlFileInner = await fsProm.readFile(path.join(pathToPage, `/components/${htmlFile}`), { encoding: 'utf-8' });
+    const arr = htmlFile.split('.');
+    const htmlFileInner = await fsProm.readFile(path.join(pathToPage, `/components/${htmlFile}`), { encoding: 'utf-8' });
     text = text.replaceAll(`{{${arr[0]}}}`, `${htmlFileInner}`);
   }
 
   await fsProm.writeFile(path.join(pathToProjectDist, 'index.html'), text);
 };
 
-let assembly = async (pathToPage, pathToProjectDist, pethToStyles) => {
+const assembly = async (pathToPage, pathToProjectDist, pethToStyles) => {
   try {
     await buildHTML(pathToPage, pathToProjectDist);
     console.log('HTML is built');
