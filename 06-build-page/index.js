@@ -36,7 +36,7 @@ const copyAssets = async (pathToFolder, pathToProjectDist, dirName) => {
 let buildHTML = async (pathToPage, pathToProjectDist) => {
 
   await fsProm.mkdir(pathToProjectDist, { recursive: true });
-  const text = await fsProm.readFile(path.join(pathToPage, 'template.html'), { encoding: 'utf-8' });
+  let text = await fsProm.readFile(path.join(pathToPage, 'template.html'), { encoding: 'utf-8' });
   const htmlFiles = await fsProm.readdir(path.join(pathToPage, 'components'));
 
   for (let htmlFile of htmlFiles) {
